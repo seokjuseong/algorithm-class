@@ -3,7 +3,7 @@ class ArrayStack:
     def __init__(self, capacity):
         self.capacity = capacity
         self.array = [None]*capacity
-        self.top = self.capacity
+        self.top = -1
     def is_empty(self):
         return self.top == -1
     def is_full(self):
@@ -42,7 +42,7 @@ def reverse_string(statement):
     while not st.is_empty():
         out.append(st.pop())
     result = ''.join(out)
-    print(print(f"최종결과: {result}"))
+    print(f"최종결과: {result}")
     return result
 
 if __name__ == "__main__":
