@@ -5,8 +5,35 @@
 #   - 링 버퍼는 큐와 유사하지만, 큐는 데이터가 가득 찼을 때 추가 삽입이 불가능.
 #   - 반면 링 버퍼는 덮어쓰기 기능을 통해 새로운 데이터를 계속해서 추가할 수 있음.
 
-from circular_queue_class import CircularQueueOneSlot
+from circular_queue_class import CircularQueueOneSlotEmpty
 
+class RingBuffer:
+    def __init__(self, capacity):
+        #내부 배열에 한 칸 비움 방식의 원형큐 기반
+        self.q = CircularQueueOneSlotEmpty(capacity)
+        
+    def is_empty(self) : 
+        return self.q.is_empty()
+    
+    def is_full(self):
+        return self.q.is_full()
+    
+    def enqueue2(self, item):
+        q = self.q
+        q.rear = (q.rear + 1) % q.N
+        if q.rear == q.front: # 포화이면 (즉, 오류 발생)
+            q.front = (q.front + 1) % q.N # 가장 오래된 데이터 삭제 
+        q.array[q.rear] = item
+
+    def dequeue(self):
+        return self.q.dequeue()
+    
+    def peek(self):
+        return self.q.peek()
+    def size(self):
+        return self.q.size()
+    def display(self, msg = "RingBuffer"):
+        return self.q.display(msg + "내부 링버퍼 상태")
 
     
      
@@ -46,7 +73,7 @@ def test_code_2_3():
     print()
 
     # 두 개 읽기 → 2, 3
-    print("read:", rb.read(), rb.read())
+    print("read:", rb.dequeue(), rb.dequeue())
     rb.display("2개 읽은 후")
     print()
 
